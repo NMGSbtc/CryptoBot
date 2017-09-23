@@ -1,0 +1,1 @@
+worker: cd backend && make && make run
