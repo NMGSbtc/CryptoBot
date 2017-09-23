@@ -15,7 +15,7 @@ const coinbaseClient = new Client({
   'version': '2017-09-23'
 });
 const krakenClient = new kraken(process.env.KRAKEN_API_KEY, process.env.KRAKEN_PRIVATE_KEY);
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 8080;
 
 app.get('/coinbase', (req, res) => {
   coinbaseClient.getBuyPrice({
