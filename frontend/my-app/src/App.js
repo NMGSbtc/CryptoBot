@@ -50,6 +50,7 @@ class App extends Component {
   }
   render() {
     return (
+      <div>
       <div className="App-header">
           <h1> CrypoBot </h1>
       </div>
@@ -77,6 +78,7 @@ class App extends Component {
         <div className='row'>
           <div id="coindesk"> Powered by <a href="http://www.coindesk.com/price/">CoinDesk</a></div>
         </div>
+      </div>
       </div>
     );
   }
