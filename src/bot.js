@@ -1,6 +1,5 @@
-// Add your requirements
-var restify = require('restify');
-var builder = require('botbuilder');
+import restify from 'restify';
+import builder from 'botbuilder';
 require('dotenv').config()
 
 // Setup Restify Server
