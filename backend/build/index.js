@@ -58,6 +58,10 @@
 
 	var _coinbase = __webpack_require__(2);
 
+	var _nodeFetch = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"node-fetch\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+
+	var _nodeFetch2 = _interopRequireDefault(_nodeFetch);
+
 	__webpack_require__(3).config();
 	// import app from './app';
 	// server.use('/hello', app);
@@ -70,9 +74,22 @@
 	});
 	var port = process.env.PORT || 4000;
 
-	app.get('/', function (req, res) {
-	  client.getBuyPrice({ 'currencyPair': 'BTC-USD' }, function (err, obj) {
+	app.get('/coinbase', function (req, res) {
+	  client.getBuyPrice({
+	    'currencyPair': 'BTC-USD'
+	  }, function (err, obj) {
 	    res.send('total amount: ' + obj.data.amount);
+	  });
+	});
+
+	app.get('/gemini', function (req, res) {
+	  var url = "https://api.gemini.com/v1/pubticker/btcusd";
+	  (0, _nodeFetch2['default'])(url).then(function (response) {
+	    response.json().then(function (json) {
+	      res.send('last amount: ' + json.last);
+	    });
+	  })['catch'](function (error) {
+	    console.log(error);
 	  });
 	});
 
