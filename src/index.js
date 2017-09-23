@@ -1,14 +1,15 @@
 import express from 'express';
-import {
-  Client
-} from 'coinbase';
+import {Client} from 'coinbase';
 import fetch from 'node-fetch';
 import kraken from 'kraken-api';
+import Gdax from 'gdax';
+
 require('dotenv').config();
 // import app from './app';
 // server.use('/hello', app);
 
 const app = express();
+const publicClient = new Gdax.PublicClient();
 const coinbaseClient = new Client({
   'apiKey': process.env.COINBASE_API_KEY,
   'apiSecret': process.env.COINBASE_API_SECRET,
@@ -16,6 +17,11 @@ const coinbaseClient = new Client({
 });
 const krakenClient = new kraken(process.env.KRAKEN_API_KEY, process.env.KRAKEN_PRIVATE_KEY);
 const port = process.env.PORT || 8080;
+
+
+app.get('/', (req, res) => {
+	res.send('Hi')
+});
 
 app.get('/coinbase', (req, res) => {
   coinbaseClient.getBuyPrice({
