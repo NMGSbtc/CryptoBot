@@ -56,6 +56,31 @@ class App extends Component {
           <h1> CrypoBot </h1>
       </div>
         <div className='container'>
+          <div className='exchanges'>
+            <div className='coinbase'>
+              <h2> Coinbase </h2>
+              <ul>
+                <li> Buy </li>
+                <li> Sell </li>
+              </ul>
+            <div className='gemini'>
+              <h2> Gemini </h2>
+              <ul>
+                <li> Buy </li>
+                <li> Sell </li>
+              </ul>
+            </div>
+            <div className='kraken'>
+              <h2> Kraken </h2>
+              <ul>
+                <li> Buy </li>
+                <li> Sell </li>
+              </ul>
+            </div>
+          </div>
+        <button>
+          Buy/Sell
+        </button>
         <div className='row'>
           <h1>30 Day Bitcoin Price Chart</h1>
         </div>
@@ -79,7 +104,8 @@ class App extends Component {
         <div className='row'>
         </div>
       </div>
-      </div>
+    </div>
+    </div>
     );
   }
 }
