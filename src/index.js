@@ -3,16 +3,20 @@ import {
   Client
 } from 'coinbase';
 import fetch from 'node-fetch';
+import kraken from 'kraken-api';
 require('dotenv').config();
 // import app from './app';
 // server.use('/hello', app);
 
 const app = express();
-const client = new Client({
+const coinbaseClient = new Client({
   'apiKey': process.env.COINBASE_API_KEY,
   'apiSecret': process.env.COINBASE_API_SECRET,
   'version': '2017-09-23'
 });
+const krakenClient = new kraken(process.env.KRAKEN_API_KEY, process.env.KRAKEN_API_SECRET);
+
+
 const port = process.env.PORT || 4000;
 
 app.get('/coinbase', (req, res) => {
