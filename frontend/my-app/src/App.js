@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import moment from 'moment';
+import Gdax from 'gdax';
 import './App.css';
 import LineChart from './LineChart';
 import ToolTip from './ToolTip';
@@ -16,9 +17,9 @@ class App extends Component {
       price: null
     }
     this.websocket = new Gdax.WebsocketClient(['BTC-USD', 'ETH-USD']);
-    websocket.on('message', data => { this.setState({price: data.price}) });
-    websocket.on('error', err => { /* handle error */ });
-    websocket.on('close', () => { /* ... */ });
+    this.websocket.on('message', data => { this.setState({price: data.price}) });
+    this.websocket.on('error', err => { /* handle error */ });
+    this.websocket.on('close', () => { /* ... */ });
   }
   handleChartHover = (hoverLoc, activePoint) => {
     this.setState({
