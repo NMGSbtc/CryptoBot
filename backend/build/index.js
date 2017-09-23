@@ -50,6 +50,8 @@
 	  value: true
 	});
 
+	var _this = this;
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 	var _express = __webpack_require__(1);
@@ -62,23 +64,30 @@
 
 	var _nodeFetch2 = _interopRequireDefault(_nodeFetch);
 
-	__webpack_require__(4).config();
+	var _krakenApi = __webpack_require__(4);
+
+	var _krakenApi2 = _interopRequireDefault(_krakenApi);
+
+	__webpack_require__(5).config();
 	// import app from './app';
 	// server.use('/hello', app);
 
 	var app = (0, _express2['default'])();
-	var client = new _coinbase.Client({
-	  'apiKey': process.env.API_KEY,
-	  'apiSecret': process.env.API_SECRET,
+	var coinbaseClient = new _coinbase.Client({
+	  'apiKey': process.env.COINBASE_API_KEY,
+	  'apiSecret': process.env.COINBASE_API_SECRET,
 	  'version': '2017-09-23'
 	});
+	var krakenClient = new _krakenApi2['default'](process.env.KRAKEN_API_KEY, process.env.KRAKEN_PRIVATE_KEY);
 	var port = process.env.PORT || 4000;
 
 	app.get('/coinbase', function (req, res) {
 	  client.getBuyPrice({
 	    'currencyPair': 'BTC-USD'
 	  }, function (err, obj) {
-	    res.send('total amount: ' + obj.data.amount);
+	    res.json({
+	      'amount': obj.data.amount
+	    });
 	  });
 	});
 
@@ -86,11 +95,36 @@
 	  var url = "https://api.gemini.com/v1/pubticker/btcusd";
 	  (0, _nodeFetch2['default'])(url).then(function (response) {
 	    response.json().then(function (json) {
-	      res.send('last amount: ' + json.last);
+	      res.json({
+	        'amount': json.last
+	      });
 	    });
 	  })['catch'](function (error) {
 	    console.log(error);
 	  });
+	});
+
+	app.get('/kraken', function (req, res) {
+	  (function callee$1$0() {
+	    return regeneratorRuntime.async(function callee$1$0$(context$2$0) {
+	      while (1) switch (context$2$0.prev = context$2$0.next) {
+	        case 0:
+	          context$2$0.t0 = console;
+	          context$2$0.next = 3;
+	          return regeneratorRuntime.awrap(krakenClient.api('Ticker', {
+	            pair: 'XXBTZUSD'
+	          }));
+
+	        case 3:
+	          context$2$0.t1 = context$2$0.sent;
+	          context$2$0.t0.log.call(context$2$0.t0, context$2$0.t1);
+
+	        case 5:
+	        case 'end':
+	          return context$2$0.stop();
+	      }
+	    }, null, _this);
+	  })();
 	});
 
 	app.listen(port, function () {
@@ -121,6 +155,12 @@
 
 /***/ },
 /* 4 */
+/***/ function(module, exports) {
+
+	module.exports = require("kraken-api");
+
+/***/ },
+/* 5 */
 /***/ function(module, exports) {
 
 	module.exports = require("dotenv");

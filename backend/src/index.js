@@ -1,5 +1,7 @@
 import express from 'express';
-import {Client} from 'coinbase';
+import {
+  Client
+} from 'coinbase';
 import fetch from 'node-fetch';
 import kraken from 'kraken-api';
 require('dotenv').config();
@@ -12,16 +14,16 @@ const coinbaseClient = new Client({
   'apiSecret': process.env.COINBASE_API_SECRET,
   'version': '2017-09-23'
 });
-const krakenClient = new kraken(process.env.KRAKEN_API_KEY, process.env.KRAKEN_API_SECRET);
-
-
+const krakenClient = new kraken(process.env.KRAKEN_API_KEY, process.env.KRAKEN_PRIVATE_KEY);
 const port = process.env.PORT || 4000;
 
 app.get('/coinbase', (req, res) => {
   client.getBuyPrice({
     'currencyPair': 'BTC-USD'
   }, (err, obj) => {
-    res.json({'amount': obj.data.amount});
+    res.json({
+      'amount': obj.data.amount
+    });
   });
 })
 
@@ -30,12 +32,22 @@ app.get('/gemini', (req, res) => {
   fetch(url)
     .then(response => {
       response.json().then(json => {
-        res.json({'amount': json.last});
+        res.json({
+          'amount': json.last
+        });
       });
     })
     .catch(error => {
       console.log(error);
     });
+})
+
+app.get('/kraken', (req, res) => {
+  (async() => {
+    console.log(await krakenClient.api('Ticker', {
+      pair: 'XXBTZUSD'
+    }));
+  })();
 })
 
 app.listen(port, () => {
