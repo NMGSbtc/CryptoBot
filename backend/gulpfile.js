@@ -8,7 +8,7 @@ var webpack = require('webpack');
 var DeepMerge = require('deep-merge');
 var nodemon = require('nodemon');
 
-var deepmerge = DeepMerge(function(target, source, key) {
+var deepmerge = DeepMerge(function (target, source, key) {
   if (target instanceof Array) {
     return [].concat(target, source);
   }
@@ -17,12 +17,11 @@ var deepmerge = DeepMerge(function(target, source, key) {
 
 var baseConfig = {
   module: {
-    loaders: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loaders: ['babel']},
-    ],
+    loaders: [{
+      test: /\.js$/,
+      exclude: /node_modules/,
+      loaders: ['babel']
+    }, ],
   },
   debug: process.env.NODE_ENV === 'production' ? false : true,
 };
@@ -43,7 +42,7 @@ function createConfig(overrides) {
 // packages in the node_modules instead of packing them into the bundle.
 var nodeModules = {};
 fs.readdirSync('node_modules')
-  .forEach(function(mod) {
+  .forEach(function (mod) {
     if (mod !== '.bin') {
       nodeModules[mod] = 'commonjs ' + mod;
     }
@@ -51,23 +50,25 @@ fs.readdirSync('node_modules')
 
 // Create Webpack config file for the server-side code.
 var serverConfig = createConfig({
-  entry: './src/index.js',
+  entry: {
+    index: './src/index.js',
+    bot: './src/bot.js'
+  },
   target: 'node',
   output: {
     path: path.join(__dirname, 'build'),
-    filename: 'index.js',
+    filename: '[name].js',
   },
   node: {
     __dirname: true,
     __filename: true,
   },
   externals: nodeModules,
-  plugins: [
-  ],
+  plugins: [],
 });
 
 function onBuild(done) {
-  return function(err, stats) {
+  return function (err, stats) {
     if (err) {
       console.log(err);
     } else {
@@ -81,18 +82,18 @@ function onBuild(done) {
 }
 
 // Gulp tasks definition begins.
-gulp.task('build', function(done) {
+gulp.task('build', function (done) {
   webpack(serverConfig).run(onBuild(done));
 });
 
-gulp.task('build-watch', ['build'], function() {
-  webpack(serverConfig).watch(100, function(err, stats) {
+gulp.task('build-watch', ['build'], function () {
+  webpack(serverConfig).watch(100, function (err, stats) {
     onBuild()(err, stats);
     nodemon.restart();
   });
 });
 
-gulp.task('run', ['build-watch'], function() {
+gulp.task('run', ['build-watch'], function () {
   nodemon({
     execMap: {
       js: 'node',
@@ -100,7 +101,20 @@ gulp.task('run', ['build-watch'], function() {
     script: path.join(__dirname, 'build/index'),
     ignore: ['*'],
     ext: 'js',
-  }).on('restart', function() {
+  }).on('restart', function () {
+    console.log('Reloading Nodemon');
+  });
+});
+
+gulp.task('run-bot', ['build-watch'], function () {
+  nodemon({
+    execMap: {
+      js: 'node',
+    },
+    script: path.join(__dirname, 'build/bot'),
+    ignore: ['*'],
+    ext: 'js',
+  }).on('restart', function () {
     console.log('Reloading Nodemon');
   });
 });
