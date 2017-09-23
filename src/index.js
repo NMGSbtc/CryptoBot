@@ -18,7 +18,7 @@ const krakenClient = new kraken(process.env.KRAKEN_API_KEY, process.env.KRAKEN_P
 const port = process.env.PORT || 4000;
 
 app.get('/coinbase', (req, res) => {
-  client.getBuyPrice({
+  coinbaseClient.getBuyPrice({
     'currencyPair': 'BTC-USD'
   }, (err, obj) => {
     res.json({
@@ -43,16 +43,20 @@ app.get('/gemini', (req, res) => {
 })
 
 app.get('/kraken', (req, res) => {
-  (async() => {
-    console.log(await krakenClient.api('Ticker', {
+  krakenClient.api('Ticker', {
       pair: 'XXBTZUSD'
-    }));
-  })();
+    }).then(json => {
+      res.json({
+        'amount': json.result.XXBTZUSD.c[0]
+      });
+    })
+    .catch(error => {
+      console.log(error);
+    });
 })
 
 app.listen(port, () => {
   console.log(`Starting server on port ${port}`);
-  console.log(process.env.API_KEY);
 });
 
 export default app;

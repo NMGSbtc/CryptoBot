@@ -50,8 +50,6 @@
 	  value: true
 	});
 
-	var _this = this;
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 	var _express = __webpack_require__(1);
@@ -82,7 +80,7 @@
 	var port = process.env.PORT || 4000;
 
 	app.get('/coinbase', function (req, res) {
-	  client.getBuyPrice({
+	  coinbaseClient.getBuyPrice({
 	    'currencyPair': 'BTC-USD'
 	  }, function (err, obj) {
 	    res.json({
@@ -105,31 +103,19 @@
 	});
 
 	app.get('/kraken', function (req, res) {
-	  (function callee$1$0() {
-	    return regeneratorRuntime.async(function callee$1$0$(context$2$0) {
-	      while (1) switch (context$2$0.prev = context$2$0.next) {
-	        case 0:
-	          context$2$0.t0 = console;
-	          context$2$0.next = 3;
-	          return regeneratorRuntime.awrap(krakenClient.api('Ticker', {
-	            pair: 'XXBTZUSD'
-	          }));
-
-	        case 3:
-	          context$2$0.t1 = context$2$0.sent;
-	          context$2$0.t0.log.call(context$2$0.t0, context$2$0.t1);
-
-	        case 5:
-	        case 'end':
-	          return context$2$0.stop();
-	      }
-	    }, null, _this);
-	  })();
+	  krakenClient.api('Ticker', {
+	    pair: 'XXBTZUSD'
+	  }).then(function (json) {
+	    res.json({
+	      'amount': json.result.XXBTZUSD.c[0]
+	    });
+	  })['catch'](function (error) {
+	    console.log(error);
+	  });
 	});
 
 	app.listen(port, function () {
 	  console.log('Starting server on port ' + port);
-	  console.log(process.env.API_KEY);
 	});
 
 	exports['default'] = app;
