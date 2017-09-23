@@ -38,6 +38,7 @@
     "coinbase": "^2.0.6",
     "dotenv": "^4.0.0",
     "express": "4.13.1",
+    "kraken-api": "^1.0.0",
     "node-fetch": "^1.7.3"
   }
 }
