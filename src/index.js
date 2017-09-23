@@ -1,6 +1,6 @@
 import express from 'express';
 import {Client} from 'coinbase';
-require('dotenv').load();
+require('dotenv').config();
 // import app from './app';
 // server.use('/hello', app);
 
