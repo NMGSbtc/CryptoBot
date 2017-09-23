@@ -1,5 +1,7 @@
 import express from 'express';
-import {Client} from 'coinbase';
+import {
+  Client
+} from 'coinbase';
 import fetch from 'node-fetch';
 require('dotenv').config();
 // import app from './app';
@@ -7,8 +9,8 @@ require('dotenv').config();
 
 const app = express();
 const client = new Client({
-  'apiKey': process.env.API_KEY,
-  'apiSecret': process.env.API_SECRET,
+  'apiKey': process.env.COINBASE_API_KEY,
+  'apiSecret': process.env.COINBASE_API_SECRET,
   'version': '2017-09-23'
 });
 const port = process.env.PORT || 4000;
