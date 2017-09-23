@@ -18,10 +18,6 @@ const krakenClient = new kraken(process.env.KRAKEN_API_KEY, process.env.KRAKEN_P
 
 const port = process.env.PORT || 8080;
 
-app.get('/', (req, res) => {
-	res.send('Home page')
-});
-
 app.get('/coinbase', (req, res) => {
   coinbaseClient.getBuyPrice({
     'currencyPair': 'BTC-USD'
