@@ -12,8 +12,13 @@ class App extends Component {
       fetchingData: true,
       data: null,
       hoverLoc: null,
-      activePoint: null
+      activePoint: null,
+      price: null
     }
+    this.websocket = new Gdax.WebsocketClient(['BTC-USD', 'ETH-USD']);
+    websocket.on('message', data => { this.setState({price: data.price}) });
+    websocket.on('error', err => { /* handle error */ });
+    websocket.on('close', () => { /* ... */ });
   }
   handleChartHover = (hoverLoc, activePoint) => {
     this.setState({

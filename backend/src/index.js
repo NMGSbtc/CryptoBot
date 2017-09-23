@@ -9,18 +9,17 @@ require('dotenv').config();
 // server.use('/hello', app);
 
 const app = express();
-const publicClient = new Gdax.PublicClient();
 const coinbaseClient = new Client({
   'apiKey': process.env.COINBASE_API_KEY,
   'apiSecret': process.env.COINBASE_API_SECRET,
   'version': '2017-09-23'
 });
 const krakenClient = new kraken(process.env.KRAKEN_API_KEY, process.env.KRAKEN_PRIVATE_KEY);
+
 const port = process.env.PORT || 8080;
 
-
 app.get('/', (req, res) => {
-	res.send('Hi')
+	res.send('Home page')
 });
 
 app.get('/coinbase', (req, res) => {
