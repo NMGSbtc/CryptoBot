@@ -64,12 +64,14 @@ class App extends Component {
       </div>
         <div className='container'>
           <div className='exchanges'>
+          <div className='prices'>
             <div className='coinbase'>
               <h2> Coinbase </h2>
               <ul>
                 <li> Buy </li>
                 <li> Sell </li>
               </ul>
+              </div>
             <div className='gemini'>
               <h2> Gemini </h2>
               <ul>
