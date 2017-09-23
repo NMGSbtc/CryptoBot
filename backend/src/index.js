@@ -1,13 +1,17 @@
 import express from 'express';
-import app from './app';
+import coinbase from 'coinbase';
+// import app from './app';
+// server.use('/hello', app);
 
-const server = express();
+const app = express();
 const port = process.env.PORT || 4000;
 
-server.use('/SERVICE_NAME', app);
+app.get('/', (req,res) => {
+  res.send('Hello World')
+})
 
-server.listen(port, () => {
-  console.log('Starting server on port', port);
+app.listen(port, () => {
+  console.log(`Starting server on port ${port}`);
 });
 
-export default server;
+export default app;
