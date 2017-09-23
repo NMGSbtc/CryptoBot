@@ -58,11 +58,11 @@
 
 	var _coinbase = __webpack_require__(2);
 
-	var _nodeFetch = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"node-fetch\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var _nodeFetch = __webpack_require__(3);
 
 	var _nodeFetch2 = _interopRequireDefault(_nodeFetch);
 
-	__webpack_require__(3).config();
+	__webpack_require__(4).config();
 	// import app from './app';
 	// server.use('/hello', app);
 
@@ -115,6 +115,12 @@
 
 /***/ },
 /* 3 */
+/***/ function(module, exports) {
+
+	module.exports = require("node-fetch");
+
+/***/ },
+/* 4 */
 /***/ function(module, exports) {
 
 	module.exports = require("dotenv");
