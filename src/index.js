@@ -1,7 +1,5 @@
 import express from 'express';
-import {
-  Client
-} from 'coinbase';
+import {Client} from 'coinbase';
 import fetch from 'node-fetch';
 import kraken from 'kraken-api';
 require('dotenv').config();
@@ -23,7 +21,7 @@ app.get('/coinbase', (req, res) => {
   client.getBuyPrice({
     'currencyPair': 'BTC-USD'
   }, (err, obj) => {
-    res.send('total amount: ' + obj.data.amount);
+    res.json({'amount': obj.data.amount});
   });
 })
 
@@ -32,7 +30,7 @@ app.get('/gemini', (req, res) => {
   fetch(url)
     .then(response => {
       response.json().then(json => {
-        res.send('last amount: ' + json.last)
+        res.json({'amount': json.last});
       });
     })
     .catch(error => {
