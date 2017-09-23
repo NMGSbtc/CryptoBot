@@ -15,39 +15,40 @@ class App extends Component {
       activePoint: null
     }
   }
-  handleChartHover(hoverLoc, activePoint){
+  handleChartHover = (hoverLoc, activePoint) => {
     this.setState({
       hoverLoc: hoverLoc,
       activePoint: activePoint
     })
   }
-  componentDidMount(){
-    const getData = () => {
-      const url = 'https://api.coindesk.com/v1/bpi/historical/close.json';
 
-      fetch(url).then( r => r.json())
-        .then((bitcoinData) => {
-          const sortedData = [];
-          let count = 0;
-          for (let date in bitcoinData.bpi){
-            sortedData.push({
-              d: moment(date).format('MMM DD'),
-              p: bitcoinData.bpi[date].toLocaleString('us-EN',{ style: 'currency', currency: 'USD' }),
-              x: count, //previous days
-              y: bitcoinData.bpi[date] // numerical price
-            });
-            count++;
-          }
-          this.setState({
-            data: sortedData,
-            fetchingData: false
-          })
+  getData = () => {
+    const url = 'https://api.coindesk.com/v1/bpi/historical/close.json';
+
+    fetch(url).then( r => r.json())
+      .then((bitcoinData) => {
+        const sortedData = [];
+        let count = 0;
+        for (let date in bitcoinData.bpi){
+          sortedData.push({
+            d: moment(date).format('MMM DD'),
+            p: bitcoinData.bpi[date].toLocaleString('us-EN',{ style: 'currency', currency: 'USD' }),
+            x: count, //previous days
+            y: bitcoinData.bpi[date] // numerical price
+          });
+          count++;
+        }
+        this.setState({
+          data: sortedData,
+          fetchingData: false
         })
-        .catch((e) => {
-          console.log(e);
-        });
-    }
-    getData();
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
+  componentDidMount(){
+    this.getData();
   }
   render() {
     return (
