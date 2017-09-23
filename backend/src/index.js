@@ -22,8 +22,7 @@ app.get('/coinbase', (req, res) => {
 })
 
 app.get('/gemini', (req, res) => {
-  const url =
-    "https://api.gemini.com/v1/pubticker/btcusd";
+  const url = "https://api.gemini.com/v1/pubticker/btcusd";
   fetch(url)
     .then(response => {
       response.json().then(json => {
