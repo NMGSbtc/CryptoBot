@@ -35,12 +35,14 @@
     "webpack": "1.10.1"
   },
   "dependencies": {
+    "botbuilder": "^3.10.1",
     "coinbase": "^2.0.6",
     "dotenv": "^4.0.0",
     "express": "4.13.1",
     "gdax": "^0.4.2",
     "kraken-api": "^1.0.0",
     "node-fetch": "^1.7.3",
+    "restify": "^6.0.1",
     "ws": "^3.2.0"
   }
 }
