@@ -77,7 +77,6 @@ class App extends Component {
           </div>
         </div>
         <div className='row'>
-          <div id="coindesk"> Powered by <a href="http://www.coindesk.com/price/">CoinDesk</a></div>
         </div>
       </div>
       </div>
