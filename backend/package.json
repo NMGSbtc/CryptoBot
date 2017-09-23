@@ -9,7 +9,7 @@
     "build": "gulp build",
     "watch": "gulp watch",
     "start-dev": "NODE_ENV=devlopment gulp run",
-    "start": "gulp build && NODE_ENV=production node build/index.js",
+    "start": "make dist && make run",
     "lint": "eslint src"
   },
   "author": "",
