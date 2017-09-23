@@ -2,7 +2,7 @@ import express from 'express';
 import {Client} from 'coinbase';
 import fetch from 'node-fetch';
 import kraken from 'kraken-api';
-import Gdax from 'gdax';
+
 
 require('dotenv').config();
 // import app from './app';
