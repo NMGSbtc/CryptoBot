@@ -1,1 +1,1 @@
-worker: cd backend && make && make run
+worker: cd backend && npm start
