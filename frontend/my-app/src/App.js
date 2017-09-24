@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Tab, Tabs, ControlledTabs} from 'react-bootstrap';
 import moment from 'moment';
 import Gdax from 'gdax';
 import './App.css';
@@ -56,6 +57,16 @@ class App extends Component {
   componentDidMount(){
     this.getData();
   }
+/*
+  const ControlledTabs = React.createClass(){
+    getInitialState() {
+      return {
+        key: 1
+      };
+    },
+  } */
+
+
   render() {
     return (
       <div>
@@ -65,54 +76,40 @@ class App extends Component {
         <div className='container'>
           <div className='exchanges'>
           <div className='prices'>
-            <div className='coinbase'>
-              <h2> Coinbase </h2>
-              <ul>
-                <li> Buy </li>
-                <li> Sell </li>
-              </ul>
+
+
+            <Tabs activeKey={this.state.key} onSelect={this.handleSelect} id="navigation">
+              <Tab eventKey={1} title="Coinbase">
+              <button>
+                Buy/Sell
+              </button>
+              <div className='row'>
+                <h1>30 Day Bitcoin Price Chart</h1>
               </div>
-            <div className='gemini'>
-              <h2> Gemini </h2>
-              <ul>
-                <li> Buy </li>
-                <li> Sell </li>
-              </ul>
-            </div>
-            <div className='kraken'>
-              <h2> Kraken </h2>
-              <ul>
-                <li> Buy </li>
-                <li> Sell </li>
-              </ul>
-            </div>
-          </div>
-        <button>
-          Buy/Sell
-        </button>
-        <div className='row'>
-          <h1>30 Day Bitcoin Price Chart</h1>
-        </div>
-        <div className='row'>
-          { !this.state.fetchingData ?
-          <InfoBox data={this.state.data} />
-          : null }
-        </div>
-        <div className='row'>
-          <div className='popup'>
-            {this.state.hoverLoc ? <ToolTip hoverLoc={this.state.hoverLoc} activePoint={this.state.activePoint}/> : null}
-          </div>
-        </div>
-        <div className='row'>
-          <div className='chart'>
-            { !this.state.fetchingData ?
-              <LineChart data={this.state.data} onChartHover={ (a,b) => this.handleChartHover(a,b) }/>
-              : null }
-          </div>
-        </div>
-        <div className='row'>
-        </div>
+              <div className='row'>
+                { !this.state.fetchingData ?
+                <InfoBox data={this.state.data} />
+                : null }
+              </div>
+              <div className='row'>
+                <div className='popup'>
+                  {this.state.hoverLoc ? <ToolTip hoverLoc={this.state.hoverLoc} activePoint={this.state.activePoint}/> : null}
+                </div>
+              </div>
+              <div className='row'>
+                <div className='chart'>
+                  { !this.state.fetchingData ?
+                    <LineChart data={this.state.data} onChartHover={ (a,b) => this.handleChartHover(a,b) }/>
+                    : null }
+                </div>
+              </div>
+              </Tab>
+              <Tab eventKey={2} title="Gemini">Tab 2 content</Tab>
+              <Tab eventKey={3} title="Kraken">Tab 3 content</Tab>
+            </Tabs>
+
       </div>
+    </div>
     </div>
     </div>
     );
